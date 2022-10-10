@@ -1,0 +1,223 @@
+
+= What is it
+
+This project is easy tool which I have implemented to help print dates, component of which can produce a given sum.
+It implements two-digits sum like:
+
+`2012-12-12: 20+12+12+12=35`
+
+and one-digit sum like:
+
+`2012-12-12: 2+0+1+2+1+2+1+2=11, 1+1=2`
+
+It can help to find all dates in a range which have two-digits sum `35`, or one-digit sum `2` for example.
+
+= How to run
+The tool is written on https://scala-lang.org/[Scala] language and uses https://gradle.org/[Gradle] build system.
+To run ше without special knowledge Gradle wrapper can be used. But Some version of Java should be installed.
+
+== Help
+To see command-line interface help:
+
+[source, shell]
+----
+$ ./gradlew run --args="--help"
+
+Usage:
+     hist
+     list
+
+Print histogram or dates
+
+Options and flags:
+    --help
+        Display this help text.
+
+Subcommands:
+    hist
+        Print histogram of dates count, 'hist --help' for details
+    list
+        Print list of dates, 'list --help' for details
+----
+So we have just two commands `list` and `hist`
+
+=== list
+[source,shell]
+----
+$ ./gradlew run --args="list --help"
+
+Usage:  list --dates <min:max> [--sum1 <integer>] [--sum2 <integer>] [--short]
+
+Print list of dates, 'list --help' for details
+
+Options and flags:
+    --help
+        Display this help text.
+    --dates <min:max>
+        Dates range in format yyyy-MM-dd:yyyy-MM-dd
+    --sum1 <integer>
+        Sum 1 Value 1-9
+    --sum2 <integer>
+        Sum 2 Value Positive
+    --short
+        Print short format
+----
+
+=== hist
+
+[source,shell]
+----
+$ ./gradlew run --args="hist --help"
+
+Usage:  hist --dates <min:max> --sum <string> [--short]
+
+Print histogram of dates count, 'hist --help' for details
+
+Options and flags:
+    --help
+        Display this help text.
+    --dates <min:max>
+        Dates range in format yyyy-MM-dd:yyyy-MM-dd
+    --sum <string>
+        Sum type one of 'one', 'two'
+    --short
+        Print short format
+----
+
+== Examples
+[source,shell]
+----
+$ ./gradlew run --args="list --dates 2022-01-01:2022-01-31 --sum1 2"
+
+2022-01-04: 2+0+2+2+1+4=11, 1+1=2
+2022-01-13: 2+0+2+2+1+1+3=11, 1+1=2
+2022-01-22: 2+0+2+2+1+2+2=11, 1+1=2
+----
+
+[source,shell]
+----
+$ ./gradlew run --args="list --dates 2022-01-01:2022-12-31 --sum2 66"
+
+2022-01-23: 20+22+01+23=66
+2022-02-22: 20+22+02+22=66
+2022-03-21: 20+22+03+21=66
+2022-04-20: 20+22+04+20=66
+2022-05-19: 20+22+05+19=66
+2022-06-18: 20+22+06+18=66
+2022-07-17: 20+22+07+17=66
+2022-08-16: 20+22+08+16=66
+2022-09-15: 20+22+09+15=66
+2022-10-14: 20+22+10+14=66
+2022-11-13: 20+22+11+13=66
+2022-12-12: 20+22+12+12=66
+----
+
+With option `--short` it prints only dates, without sum.
+
+[source,shell]
+----
+$ ./gradlew run --args="hist --dates 2022-01-01:2022-12-31 --sum one"
+
+> Task :app:run
+1 : 41 | ===================-
+2 : 42 | ====================-
+3 : 40 | ===================-
+4 : 40 | ===================-
+5 : 39 | ==================-
+6 : 40 | ===================-
+7 : 39 | ==================-
+8 : 41 | ===================-
+----
+
+[source,shell]
+----
+d, 3 up-to-date
+$ ./gradlew run --args="hist --dates 2022-01-01:2022-12-31 --sum two"
+
+> Task :app:run
+01 : 00 |
+02 : 00 |
+03 : 00 |
+04 : 00 |
+05 : 00 |
+06 : 00 |
+07 : 00 |
+08 : 00 |
+09 : 00 |
+10 : 00 |
+11 : 00 |
+12 : 00 |
+13 : 00 |
+14 : 00 |
+15 : 00 |
+16 : 00 |
+17 : 00 |
+18 : 00 |
+19 : 00 |
+20 : 00 |
+21 : 00 |
+22 : 00 |
+23 : 00 |
+24 : 00 |
+25 : 00 |
+26 : 00 |
+27 : 00 |
+28 : 00 |
+29 : 00 |
+30 : 00 |
+31 : 00 |
+32 : 00 |
+33 : 00 |
+34 : 00 |
+35 : 00 |
+36 : 00 |
+37 : 00 |
+38 : 00 |
+39 : 00 |
+40 : 00 |
+41 : 00 |
+42 : 00 |
+43 : 00 |
+44 : 01 | =-
+45 : 02 | ===-
+46 : 03 | =====-
+47 : 04 | ======-
+48 : 05 | ========-
+49 : 06 | ==========-
+50 : 07 | ===========-
+51 : 08 | =============-
+52 : 09 | ===============-
+53 : 10 | ================-
+54 : 11 | ==================-
+55 : 12 | ====================-
+56 : 12 | ====================-
+57 : 12 | ====================-
+58 : 12 | ====================-
+59 : 12 | ====================-
+60 : 12 | ====================-
+61 : 12 | ====================-
+62 : 12 | ====================-
+63 : 12 | ====================-
+64 : 12 | ====================-
+65 : 12 | ====================-
+66 : 12 | ====================-
+67 : 12 | ====================-
+68 : 12 | ====================-
+69 : 12 | ====================-
+70 : 12 | ====================-
+71 : 12 | ====================-
+72 : 12 | ====================-
+73 : 11 | ==================-
+74 : 11 | ==================-
+75 : 10 | ================-
+76 : 10 | ================-
+77 : 08 | =============-
+78 : 08 | =============-
+79 : 06 | ==========-
+80 : 06 | ==========-
+81 : 05 | ========-
+82 : 03 | =====-
+83 : 03 | =====-
+----
+
+With option `--short` it prints only `sum:count` pair.
